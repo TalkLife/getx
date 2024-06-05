@@ -9,8 +9,8 @@ import '../../response/response.dart';
 import '../interface/request_base.dart';
 import '../utils/body_decoder.dart';
 
-/// A `dart:html` implementation of `IClient`.
-class HttpRequestImpl implements IClient {
+/// A `dart:html` implementation of `HttpRequestBase`.
+class HttpRequestImpl implements HttpRequestBase {
   HttpRequestImpl({
     bool allowAutoSignedCert = true,
     List<TrustedCertificate>? trustedCertificates,
@@ -51,21 +51,7 @@ class HttpRequestImpl implements IClient {
       var reader = FileReader();
 
       reader.onLoad.first.then((_) async {
-        var bodyBytes = (reader.result as List<int>).toStream();
-
-        if (request.responseInterceptor != null)
-          throw 'response interception not implemented for web yet!';
-
-        /*
-        TODO to be implemented like in http_request_io.dart
-        final interceptionResponse = await request.responseInterceptor?.call(request, T, reponse);
-
-        if (interceptionResponse != null) {
-          completer.complete(interceptionResponse);
-          return;
-        }
-
-        */
+        var bodyBytes = BodyBytesStream.fromBytes(reader.result as List<int>);
 
         final stringBody =
             await bodyBytesToString(bodyBytes, xhr.responseHeaders);

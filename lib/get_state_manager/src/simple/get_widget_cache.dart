@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 abstract class GetWidgetCache extends Widget {
-  const GetWidgetCache({super.key});
+  const GetWidgetCache({Key? key}) : super(key: key);
 
   @override
   GetWidgetCacheElement createElement() => GetWidgetCacheElement(this);
@@ -29,6 +29,11 @@ class GetWidgetCacheElement extends ComponentElement {
   Widget build() => cache.build(this);
 
   final WidgetCache<GetWidgetCache> cache;
+
+  @override
+  void performRebuild() {
+    super.performRebuild();
+  }
 
   @override
   void activate() {

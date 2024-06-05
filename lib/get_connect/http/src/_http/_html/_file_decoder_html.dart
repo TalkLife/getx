@@ -1,5 +1,3 @@
-// import 'dart:html' as html;
-
 List<int> fileToBytes(dynamic data) {
   if (data is List<int>) {
     return data;
